@@ -2,6 +2,10 @@ import nodemailer from "nodemailer";
 import formidable from "formidable";
 import fs from "fs";
 
+console.log("ENV CHECK:");
+console.log("GMAIL_USER:", process.env.GMAIL_USER);
+console.log("GMAIL_PASS exists:", !!process.env.GMAIL_PASS);
+
 // Disable default body parsing
 export const config = {
   api: {
