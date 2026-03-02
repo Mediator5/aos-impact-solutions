@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import formidable from "formidable";
 import fs from "fs";
 
-// Disable default body parsing (required for formidable)
+// Disable body parser for file uploads
 export const config = {
   api: {
     bodyParser: false,
@@ -14,14 +14,13 @@ export default async function handler(req, res) {
     return res.status(405).send("Method Not Allowed");
   }
 
-  // Quick environment safety check
   if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS || !process.env.TO) {
     console.error("Missing required environment variables.");
     return res.status(500).send("Server configuration error.");
   }
 
   const form = formidable({
-    multiples: false,
+    multiples: true, // IMPORTANT: allow array handling
     keepExtensions: true,
   });
 
@@ -33,22 +32,25 @@ export default async function handler(req, res) {
       });
     });
 
-    // Create Gmail transporter (explicit SMTP — more stable)
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
       secure: true,
       auth: {
         user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS, // MUST be Google App Password
+        pass: process.env.GMAIL_PASS,
       },
     });
 
-    // Build attachments using buffers (serverless safe)
     const attachments = [];
 
-    async function addFile(file) {
-      if (!file) return;
+    async function addFile(fileField) {
+      if (!fileField) return;
+
+      // Handle both single file and array
+      const file = Array.isArray(fileField) ? fileField[0] : fileField;
+
+      if (!file || !file.filepath) return;
 
       const fileBuffer = await fs.promises.readFile(file.filepath);
 
@@ -62,7 +64,6 @@ export default async function handler(req, res) {
     await addFile(files.ssn_upload);
     await addFile(files.address_proof_upload);
 
-    // Email content
     const mailOptions = {
       from: process.env.GMAIL_USER,
       to: process.env.TO,
@@ -95,7 +96,6 @@ export default async function handler(req, res) {
 
     await transporter.sendMail(mailOptions);
 
-    // Redirect after success
     res.writeHead(302, {
       Location: "https://bisque-ram-411182.hostingersite.com/thank-you",
     });
@@ -103,6 +103,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("API ERROR:", error);
-    return res.status(500).send("Email sending failed.");
+    res.status(500).send("Email sending failed.");
   }
 }
