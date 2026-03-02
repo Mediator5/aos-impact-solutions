@@ -23,7 +23,7 @@
     #consultation-form-wrap input[type="tel"],
     #consultation-form-wrap select,
     #consultation-form-wrap textarea { -webkit-appearance: none; appearance: none; }
-      .custom-checkbox {
+    .custom-checkbox {
       display: flex;
       align-items: flex-start;
       gap: 12px;
@@ -86,12 +86,12 @@
       <div class="grid grid-cols-2 gap-4">
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">Last Name <span class="text-yellow-500">*</span></label>
-          <input type="text" placeholder="Last Name"
+          <input type="text" name="last_name" placeholder="Last Name"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">First Name <span class="text-yellow-500">*</span></label>
-          <input type="text" placeholder="First Name"
+          <input type="text" name="first_name" placeholder="First Name"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
       </div>
@@ -100,12 +100,12 @@
       <div class="grid grid-cols-2 gap-4">
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">Phone <span class="text-yellow-500">*</span></label>
-          <input type="tel" id="phone" placeholder="Phone" maxlength="12"
+          <input type="tel" id="phone" name="phone" placeholder="Phone" maxlength="12"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">Email <span class="text-yellow-500">*</span></label>
-          <input type="email" placeholder="Email"
+          <input type="email" name="email" placeholder="Email"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
       </div>
@@ -119,13 +119,13 @@
 
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">Experian Username <span class="text-yellow-500">*</span></label>
-          <input type="text" placeholder="Username"
+          <input type="text" name="experian_username" placeholder="Username"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
 
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">Experian Password <span class="text-yellow-500">*</span></label>
-          <input type="password" placeholder="Password"
+          <input type="password" name="experian_password" placeholder="Password"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
 
@@ -135,13 +135,13 @@
 
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">Experian Security Answer <span class="text-yellow-500">*</span></label>
-          <input type="text" placeholder="Security Answer"
+          <input type="text" name="experian_security_answer" placeholder="Security Answer"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
 
         <div class="space-y-1">
           <label class="block text-gray-800 text-sm font-semibold">Experian 4 Digit Pin <span class="text-yellow-500">*</span></label>
-          <input type="text" id="exp-pin" placeholder="4 Digit Pin" maxlength="4"
+          <input type="text" id="exp-pin" name="experian_pin" placeholder="4 Digit Pin" maxlength="4"
             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition"/>
         </div>
 
@@ -152,23 +152,23 @@
         <label class="block text-gray-800 text-sm font-semibold">Choose One of these services describe what you are looking for?</label>
 
         <label class="custom-checkbox">
-          <input type="checkbox"/><span class="checkmark"></span>
+          <input type="checkbox" name="service" value="full_credit_restoration"/><span class="checkmark"></span>
           <span class="text-gray-700 text-sm">Full Credit Restoration (Including Inquiries)</span>
         </label>
         <label class="custom-checkbox">
-          <input type="checkbox"/><span class="checkmark"></span>
+          <input type="checkbox" name="service" value="inquiry_only_removal"/><span class="checkmark"></span>
           <span class="text-gray-700 text-sm">Inquiry Only Removal</span>
         </label>
         <label class="custom-checkbox">
-          <input type="checkbox"/><span class="checkmark"></span>
+          <input type="checkbox" name="service" value="authorized_user_tradelines"/><span class="checkmark"></span>
           <span class="text-gray-700 text-sm">Authorized User Tradelines</span>
         </label>
         <label class="custom-checkbox">
-          <input type="checkbox"/><span class="checkmark"></span>
+          <input type="checkbox" name="service" value="business_funding"/><span class="checkmark"></span>
           <span class="text-gray-700 text-sm">Business Funding</span>
         </label>
         <label class="custom-checkbox">
-          <input type="checkbox"/><span class="checkmark"></span>
+          <input type="checkbox" name="service" value="all_of_the_above"/><span class="checkmark"></span>
           <span class="text-gray-700 text-sm">All of the Above</span>
         </label>
       </div>
@@ -176,7 +176,7 @@
       <!-- SMS Consent -->
       <div class="border-t border-gray-200 pt-4">
         <label class="custom-checkbox">
-          <input type="checkbox"/><span class="checkmark"></span>
+          <input type="checkbox" name="sms_consent" value="1"/><span class="checkmark"></span>
           <span class="text-gray-600 text-sm leading-snug">I consent to receive SMS messages</span>
         </label>
       </div>

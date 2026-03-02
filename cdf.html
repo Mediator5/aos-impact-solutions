@@ -8,19 +8,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.5/cdn.min.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
     <script>
-        // Load Tailwind with important prefix applied via CDN
-        // Since Tailwind CDN doesn't natively support ! prefix,
-        // we manually apply important via a custom config
         tailwind = {
             config: {
-                important: true // Makes ALL Tailwind classes !important globally
+                important: true
             }
         };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            important: true, // This makes all Tailwind utilities output as !important
+            important: true,
         }
     </script>
     <style>
@@ -28,7 +25,6 @@
             font-family: 'Lato', sans-serif;
         }
 
-        /* Additional reset to fight WP themes */
         #credit-dispute-form-wrap *,
         #credit-dispute-form-wrap *::before,
         #credit-dispute-form-wrap *::after {
@@ -99,7 +95,6 @@
 
 <body>
 
-    <!-- Wrap everything in a scoped ID for WordPress embedding -->
     <div id="credit-dispute-form-wrap" class="min-h-screen bg-gray-100 py-10 px-4">
         <div class="max-w-lg mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
 
@@ -124,14 +119,14 @@
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">MyFreeScoreNow Username <span
                                 class="text-yellow-500">*</span></label>
-                        <input type="text" placeholder="Username"
+                        <input type="text" name="myfreescorenow_username" placeholder="Username"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">MyFreeScoreNow Password <span
                                 class="text-yellow-500">*</span></label>
-                        <input type="password" placeholder="Password"
+                        <input type="password" name="myfreescorenow_password" placeholder="Password"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
                 </div>
@@ -145,14 +140,14 @@
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Experian Username <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="text" placeholder="Username"
+                        <input type="text" name="experian_username" placeholder="Username"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Experian Password <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="password" placeholder="Password"
+                        <input type="password" name="experian_password" placeholder="Password"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
                 </div>
@@ -163,28 +158,28 @@
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Name <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="text" placeholder="First and Last Name"
+                        <input type="text" name="full_name" placeholder="First and Last Name"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Phone <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="tel" id="phone" placeholder="554-213-1234" maxlength="12"
+                        <input type="tel" id="phone" name="phone" placeholder="554-213-1234" maxlength="12"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Date of Birth <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="text" id="dob" placeholder="MM/DD/YYYY" maxlength="10"
+                        <input type="text" id="dob" name="date_of_birth" placeholder="MM/DD/YYYY" maxlength="10"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Address (Include Apt or Unit if you
                             have one) <span class="text-yellow-400">*</span></label>
-                        <input type="text" placeholder="Address"
+                        <input type="text" name="address" placeholder="Address"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
@@ -192,13 +187,13 @@
                         <div class="space-y-1">
                             <label class="block text-gray-800 text-sm font-semibold">City <span
                                     class="text-yellow-400">*</span></label>
-                            <input type="text" placeholder="City"
+                            <input type="text" name="city" placeholder="City"
                                 class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                         </div>
                         <div class="space-y-1">
                             <label class="block text-gray-800 text-sm font-semibold">State <span
                                     class="text-yellow-400">*</span></label>
-                            <input type="text" placeholder="State"
+                            <input type="text" name="state" placeholder="State"
                                 class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                         </div>
                     </div>
@@ -206,21 +201,21 @@
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Zip Code <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="text" placeholder="Zip Code"
+                        <input type="text" name="zip_code" placeholder="Zip Code"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">SSN <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="text" id="ssn" placeholder="000-00-0000" maxlength="11"
+                        <input type="text" id="ssn" name="ssn" placeholder="000-00-0000" maxlength="11"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
                     <div class="space-y-1">
                         <label class="block text-gray-800 text-sm font-semibold">Email <span
                                 class="text-yellow-400">*</span></label>
-                        <input type="email" placeholder="Email Address"
+                        <input type="email" name="email" placeholder="Email Address"
                             class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
                     </div>
 
@@ -247,7 +242,7 @@
                                 Choose File
                             </span>
                             <span class="text-gray-500 text-sm" id="file1-label">No file chosen</span>
-                            <input type="file" class="hidden"
+                            <input type="file" name="id_upload" class="hidden"
                                 onchange="document.getElementById('file1-label').textContent = this.files[0]?.name || 'No file chosen'" />
                         </label>
                     </div>
@@ -270,7 +265,7 @@
                                 Choose File
                             </span>
                             <span class="text-gray-500 text-sm" id="file2-label">No file chosen</span>
-                            <input type="file" class="hidden"
+                            <input type="file" name="ssn_upload" class="hidden"
                                 onchange="document.getElementById('file2-label').textContent = this.files[0]?.name || 'No file chosen'" />
                         </label>
                     </div>
@@ -294,7 +289,7 @@
                                 Choose File
                             </span>
                             <span class="text-gray-500 text-sm" id="file3-label">No file chosen</span>
-                            <input type="file" class="hidden"
+                            <input type="file" name="address_proof_upload" class="hidden"
                                 onchange="document.getElementById('file3-label').textContent = this.files[0]?.name || 'No file chosen'" />
                         </label>
                     </div>
