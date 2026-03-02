@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Credit Dispute Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.5/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+    <script>
+        // Load Tailwind with important prefix applied via CDN
+        // Since Tailwind CDN doesn't natively support ! prefix,
+        // we manually apply important via a custom config
+        tailwind = {
+            config: {
+                important: true // Makes ALL Tailwind classes !important globally
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            important: true, // This makes all Tailwind utilities output as !important
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        /* Additional reset to fight WP themes */
+        #credit-dispute-form-wrap *,
+        #credit-dispute-form-wrap *::before,
+        #credit-dispute-form-wrap *::after {
+            box-sizing: border-box;
+        }
+
+        #credit-dispute-form-wrap input,
+        #credit-dispute-form-wrap select,
+        #credit-dispute-form-wrap textarea {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .custom-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+            margin: 0;
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+            position: absolute !important;
+            opacity: 0 !important;
+            width: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+            pointer-events: none;
+        }
+
+        .custom-checkbox .checkmark {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            margin-top: 2px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+.checkmark {
+            background: #eab308;
+            border-color: #eab308;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+.checkmark::after {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 9px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg) translate(-1px, -1px);
+        }
+
+        .custom-checkbox:hover .checkmark {
+            border-color: #eab308;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Wrap everything in a scoped ID for WordPress embedding -->
+    <div id="credit-dispute-form-wrap" class="min-h-screen bg-gray-100 py-10 px-4">
+        <div class="max-w-lg mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
+
+            <!-- Header -->
+            <div class="bg-white px-8 py-8 text-center border-b border-gray-200">
+                <h1 class="text-3xl font-bold text-yellow-500 tracking-wide">Credit Dispute Form</h1>
+                <p class="text-gray-600 text-sm mt-3 leading-relaxed">
+                    To get your dispute process started, please complete the form below within 2 business days.
+                </p>
+            </div>
+
+            <form class="px-8 py-8 space-y-7">
+
+                <!-- MyFreeScoreNow Section -->
+                <div class="rounded-lg border border-yellow-400 bg-yellow-50 p-5 space-y-4">
+                    <p class="text-yellow-600 font-bold text-sm leading-snug">
+                        CLICK HERE to create an account with My Free Score Now and provide the login details below
+                    </p>
+                    <p class="text-gray-500 text-xs -mt-2">It's a $1 trial for 7 days then $20/m. Must keep active
+                        during services.</p>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">MyFreeScoreNow Username <span
+                                class="text-yellow-500">*</span></label>
+                        <input type="text" placeholder="Username"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">MyFreeScoreNow Password <span
+                                class="text-yellow-500">*</span></label>
+                        <input type="password" placeholder="Password"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+                </div>
+
+                <!-- Experian Section -->
+                <div class="rounded-lg border border-yellow-400 bg-yellow-50 p-5 space-y-4">
+                    <p class="text-yellow-600 font-bold text-sm leading-snug">
+                        CLICK HERE to create an account with Experian Now and provide the login details below
+                    </p>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Experian Username <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="text" placeholder="Username"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Experian Password <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="password" placeholder="Password"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+                </div>
+
+                <!-- Personal Info Section -->
+                <div class="space-y-4">
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Name <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="text" placeholder="First and Last Name"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Phone <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="tel" id="phone" placeholder="554-213-1234" maxlength="12"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Date of Birth <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="text" id="dob" placeholder="MM/DD/YYYY" maxlength="10"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Address (Include Apt or Unit if you
+                            have one) <span class="text-yellow-400">*</span></label>
+                        <input type="text" placeholder="Address"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="block text-gray-800 text-sm font-semibold">City <span
+                                    class="text-yellow-400">*</span></label>
+                            <input type="text" placeholder="City"
+                                class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-gray-800 text-sm font-semibold">State <span
+                                    class="text-yellow-400">*</span></label>
+                            <input type="text" placeholder="State"
+                                class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Zip Code <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="text" placeholder="Zip Code"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">SSN <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="text" id="ssn" placeholder="000-00-0000" maxlength="11"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold">Email <span
+                                class="text-yellow-400">*</span></label>
+                        <input type="email" placeholder="Email Address"
+                            class="w-full bg-white border border-gray-300 rounded-md px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition" />
+                    </div>
+
+                </div>
+
+                <!-- File Uploads -->
+                <div class="space-y-5">
+
+                    <!-- Upload 1 -->
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold leading-snug">
+                            Upload License or ID (Preferably Passport)
+                            <span class="font-normal text-gray-600">(Must show all 4 corners on a solid color background
+                                NOT in your lap or holding in your hand)</span>
+                        </label>
+                        <label class="custom-checkbox">
+                            <span
+                                class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 transition text-gray-800 text-sm font-semibold px-4 py-2 rounded-md">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                </svg>
+                                Choose File
+                            </span>
+                            <span class="text-gray-500 text-sm" id="file1-label">No file chosen</span>
+                            <input type="file" class="hidden"
+                                onchange="document.getElementById('file1-label').textContent = this.files[0]?.name || 'No file chosen'" />
+                        </label>
+                    </div>
+
+                    <!-- Upload 2 -->
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold leading-snug">
+                            Upload Social Security Card or W2 with FULL social visible
+                            <span class="font-normal text-gray-600">(Must show all 4 corners on a solid color background
+                                NOT in your lap or holding in your hand)</span>
+                        </label>
+                        <label class="custom-checkbox">
+                            <span
+                                class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 transition text-gray-800 text-sm font-semibold px-4 py-2 rounded-md">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                </svg>
+                                Choose File
+                            </span>
+                            <span class="text-gray-500 text-sm" id="file2-label">No file chosen</span>
+                            <input type="file" class="hidden"
+                                onchange="document.getElementById('file2-label').textContent = this.files[0]?.name || 'No file chosen'" />
+                        </label>
+                    </div>
+
+                    <!-- Upload 3 -->
+                    <div class="space-y-1">
+                        <label class="block text-gray-800 text-sm font-semibold leading-snug">
+                            Upload Utility Bill, Cable Bill, Phone Bill, Internet Bill, or Etc.
+                            <span class="font-normal text-gray-600">(Must Show Current Address as this will be Proof Of
+                                Address. Must show all 4 corners on a solid color background NOT in your lap or holding
+                                in your hand)</span>
+                        </label>
+                        <label class="custom-checkbox">
+                            <span
+                                class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 transition text-gray-800 text-sm font-semibold px-4 py-2 rounded-md">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                </svg>
+                                Choose File
+                            </span>
+                            <span class="text-gray-500 text-sm" id="file3-label">No file chosen</span>
+                            <input type="file" class="hidden"
+                                onchange="document.getElementById('file3-label').textContent = this.files[0]?.name || 'No file chosen'" />
+                        </label>
+                    </div>
+
+                </div>
+
+                <!-- Footer note -->
+                <p class="text-gray-500 text-xs leading-relaxed border-t border-gray-200 pt-5">
+                    * Before submitting please just double check and make sure everything is put in correctly to speed
+                    up the process for us to get started. Thanks in advance.
+                </p>
+
+                <!-- Submit -->
+                <button type="submit"
+                    class="w-full bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 transition text-gray-900 font-bold text-base py-3.5 rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/20">
+                    Submit
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Phone: 554-213-1234
+        document.getElementById('phone').addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, '').substring(0, 10);
+            if (val.length >= 7) {
+                val = val.slice(0, 3) + '-' + val.slice(3, 6) + '-' + val.slice(6);
+            } else if (val.length >= 4) {
+                val = val.slice(0, 3) + '-' + val.slice(3);
+            }
+            e.target.value = val;
+        });
+
+        // DOB: MM/DD/YYYY
+        document.getElementById('dob').addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, '').substring(0, 8);
+            if (val.length >= 5) {
+                val = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
+            } else if (val.length >= 3) {
+                val = val.slice(0, 2) + '/' + val.slice(2);
+            }
+            e.target.value = val;
+        });
+
+        // SSN: 567-09-4320
+        document.getElementById('ssn').addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, '').substring(0, 9);
+            if (val.length >= 6) {
+                val = val.slice(0, 3) + '-' + val.slice(3, 5) + '-' + val.slice(5);
+            } else if (val.length >= 4) {
+                val = val.slice(0, 3) + '-' + val.slice(3);
+            }
+            e.target.value = val;
+        });
+    </script>
+</body>
+
+</html>
