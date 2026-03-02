@@ -51,7 +51,7 @@ export default async function handler(req, res) {
 
       const mailOptions = {
         from: process.env.GMAIL_USER,
-        to: process.env.GMAIL_USER,
+        to: process.env.TO,
         subject: "New Tradeline Signup Submission",
         html: `
           <h2>New Tradeline Signup</h2>

@@ -62,7 +62,7 @@ export default async function handler(req, res) {
       // Email body
       const mailOptions = {
         from: process.env.GMAIL_USER,
-        to: process.env.GMAIL_USER, // where you receive submissions
+        to: process.env.TO, // where you receive submissions
         subject: "New Credit Dispute Form Submission",
         html: `
           <h2>New Submission</h2>
